@@ -1,29 +1,31 @@
 package AllTestsYandexSamokat;
 
 import ButtonAndPath.ButtonOnPageObject;
+import Configure.WebDriverFactory;
 import ElementsOnFormOrder.AboutRentElementsOnOrderPage;
 import ElementsOnFormOrder.OrderPageElements;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+
 
 public class OrderTest {
     private WebDriver driver;
+    String website = "https://qa-scooter.praktikum-services.ru/";
+    @Before
+    public void setup() throws Exception {
+        String browserName = WebDriverFactory.getBrowserName();
+        driver = WebDriverFactory.getWebDriverForBrowser(browserName);
+        WebDriverFactory.navigateToTheUrl(website);
+    }
 
     @Test
     // в этом тесте бага при нажатии на кнопку "Да"
     public void testChromeWhenButtonYesDontClick() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        driver = new ChromeDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
         ButtonOnPageObject buttonOnPageObject = new ButtonOnPageObject(driver);
         buttonOnPageObject.clickOrderButtonOnUp();
         buttonOnPageObject.waitForLoadHeaderOrderPage();
-
         OrderPageElements orderPageElements = new OrderPageElements(driver);
         orderPageElements.inputFirstNameClient("Алекс");
         orderPageElements.inputLastNameClient("Тестовский");
@@ -44,28 +46,13 @@ public class OrderTest {
         aboutRentElementsOnOrderPage.waitForLoadPageOrder();
         aboutRentElementsOnOrderPage.waitOrderSuccsessScreen();
         aboutRentElementsOnOrderPage.clickButtonOrderStatus();
-
     }
-
-    @After
-    public void closeChrome() {
-        driver.quit();
-    }
-
 
     @Test
     public void testMozilaWhenButtonYesClick() {
-        System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
         ButtonOnPageObject buttonOnPageObject = new ButtonOnPageObject(driver);
         buttonOnPageObject.clickOrderButtonOnUp();
-//        WebElement element = driver.findElement(By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[@class='Button_Button__ra12g Button_UltraBig__UU3Lp']']"));
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         buttonOnPageObject.waitForLoadHeaderOrderPage();
-
         OrderPageElements orderPageElements = new OrderPageElements(driver);
         orderPageElements.inputFirstNameClient("Антон");
         orderPageElements.inputLastNameClient("Тестовский");
@@ -89,8 +76,8 @@ public class OrderTest {
     }
 
     @After
-    public void closeFox() {
-        driver.quit();
+    public void closeBrow() {
+        WebDriverFactory.quitDriver();
     }
 
 }
