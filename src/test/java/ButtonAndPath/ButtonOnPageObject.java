@@ -34,6 +34,11 @@ public class ButtonOnPageObject {
         }
     }
 
+    public void clickOrderButtonOnUp() {
+        driver.findElement(orderButtonUpOnHomePage).click();// Нажатие на кнопку "Заказать" вверху страницы
+    }
+
+
     public void waitForLoadHeaderOrderPage() {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(titleElementPageOrder)); //ожидание загрузки заголовка Для кого самокат

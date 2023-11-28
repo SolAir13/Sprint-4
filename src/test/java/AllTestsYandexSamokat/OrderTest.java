@@ -1,7 +1,7 @@
 package AllTestsYandexSamokat;
 
 import ButtonAndPath.ButtonOnPageObject;
-//import Configure.WebDriverFactory;
+import Configure.WebDriverFactory;
 import ElementsOnFormOrder.AboutRentElementsOnOrderPage;
 import ElementsOnFormOrder.OrderPageElements;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -47,6 +47,13 @@ public class OrderTest {
         }
     }
 
+//    @Before
+//    public void setup() throws Exception {
+//        String browserName = WebDriverFactory.getBrowserName();
+//        driver = WebDriverFactory.getWebDriverForBrowser(browserName);
+//        WebDriverFactory.navigateToTheUrl(website);
+//    }
+
     @Test
     // в этом тесте бага при нажатии на кнопку "Да" для браузера chrome. Для браузера firefox тесты проходят
     public void testChromeWhenButtonYesDontClick() {
@@ -75,9 +82,11 @@ public class OrderTest {
         aboutRentElementsOnOrderPage.clickButtonOrderStatus();
     }
 
+
     @After
     public void closeBrow() {
         driver.quit();
+//        WebDriverFactory.quitDriver();
     }
 
 }
